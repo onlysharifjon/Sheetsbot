@@ -27,7 +27,7 @@ async def start_command(message: types.Message):
 
 from excel import read_excel_part1
 
-
+#
 @dp.message_handler(content_types=types.ContentTypes.DOCUMENT)
 async def file_handler(message: types.Message):
     file_name = message.document.file_name
