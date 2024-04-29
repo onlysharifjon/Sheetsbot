@@ -1,14 +1,11 @@
 import logging
-
 import openpyxl
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
-
 TOKEN = '6988980301:AAHtfRkFbZo1R-HexBLovgrm0OX3Bl-Dalo'
-
 bot = Bot(token=TOKEN, parse_mode='HTML')
 dp = Dispatcher(bot, storage=MemoryStorage())
 logging.basicConfig(level=logging.INFO)
@@ -27,6 +24,7 @@ async def start_command(message: types.Message):
 
 from excel import read_excel_part1
 
+
 #
 @dp.message_handler(content_types=types.ContentTypes.DOCUMENT)
 async def file_handler(message: types.Message):
@@ -34,10 +32,8 @@ async def file_handler(message: types.Message):
     if file_name.lower().endswith('.xlsx'):
         await message.document.download(f'uploads/{file_name}')
         await message.answer('Fayl yuklandi!')
-        # os.remove(f'uploads/{file_name}')
-        txt = read_excel_part1(path=f'uploads/{file_name}', file_name=file_name)
+        txt = await read_excel_part1(path=f'uploads/{file_name}', file_name=file_name)
         await message.answer(txt)
-
     else:
         await message.answer('.XLSX yoki .xlsx formatdagi faylni yuboring!')
 
